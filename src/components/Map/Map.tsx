@@ -35,7 +35,7 @@ function Map({ markers, onMapClick, polyline }: Props) {
 
   // When `markers` change, first remove current markers and update the list
   useEffect(() => {
-    markerGroup.current?.removeLayer(markerGroup.current);
+    map.current?.removeLayer(markerGroup.current!);
 
     markerGroup.current = map.current
       ? L.layerGroup(markers).addTo(map.current)
@@ -44,11 +44,11 @@ function Map({ markers, onMapClick, polyline }: Props) {
 
   // When `polyline` changes, update the polyline
   useEffect(() => {
-    if (!map.current || !polyline) {
+    if (!polyline || !markerGroup.current) {
       return;
     }
 
-    polyline.addTo(map.current);
+    polyline.addTo(markerGroup.current);
   }, [polyline]);
 
   return (

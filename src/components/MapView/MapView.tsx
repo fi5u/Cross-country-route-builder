@@ -20,7 +20,7 @@ const ICON = new L.Icon({
  * @param param.
  */
 function MapView({ dispatch, waypoints }: Props) {
-  const polyline = useRef<L.Polyline>(L.polyline(waypoints, { color: "blue" }));
+  const polyline = useRef<L.Polyline>(L.polyline([]));
   const [markers, setMarkers] = useState<L.Marker[]>([]);
 
   // When `waypoints` list changes, update the markers on the map
@@ -30,22 +30,22 @@ function MapView({ dispatch, waypoints }: Props) {
 
   // When `waypoints` list changes, update the polylines on the map
   useEffect(() => {
-    console.log("waypoints changed");
-
-    polyline.current = L.polyline(waypoints, { color: "blue" });
+    calculatePolyline();
   }, [waypoints]);
 
   function calulateMarkers() {
     setMarkers(
-      waypoints.map((waypoint) =>
+      waypoints.map((waypoint, index) =>
         L.marker(waypoint, { draggable: true, icon: ICON }).on(
           "dragend",
-          (e) => {
-            console.log(e.target.getLatLng());
-          }
+          (event) => handleUpdateWaypoint(event, index)
         )
       )
     );
+  }
+
+  function calculatePolyline() {
+    polyline.current = L.polyline(waypoints, { color: "blue" });
   }
 
   /**
@@ -60,6 +60,17 @@ function MapView({ dispatch, waypoints }: Props) {
   }
 
   function handleMarkerClick() {}
+
+  function handleUpdateWaypoint(event: L.DragEndEvent, index: number) {
+    const newLatLng = event.target.getLatLng();
+    dispatch({
+      type: "updateWaypoint",
+      payload: {
+        index,
+        waypoint: [newLatLng.lat, newLatLng.lng],
+      },
+    });
+  }
 
   return (
     <ErrorBoundary id="MapView">

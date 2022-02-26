@@ -20,6 +20,12 @@ function reducer(state: AppState, action: AppStateAction) {
           (wp) => wp[0] !== action.payload[0] || wp[1] !== action.payload[1]
         ),
       };
+    case "updateWaypoint":
+      return {
+        waypoints: state.waypoints.map((waypoint, index) =>
+          action.payload.index === index ? action.payload.waypoint : waypoint
+        ),
+      };
     default:
       throw new Error();
   }

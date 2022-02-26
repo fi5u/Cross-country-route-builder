@@ -8,8 +8,6 @@ import ListItem from "components/ListItem";
  * @param param.
  */
 function List({ waypoints }: Props) {
-  console.log(waypoints);
-
   return (
     <ErrorBoundary id="List">
       <div className={styles.root}>
