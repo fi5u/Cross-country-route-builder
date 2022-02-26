@@ -3,5 +3,5 @@ export interface AppStateAction {
   payload: any;
 }
 
-type Waypoint = string;
+type Waypoint = L.LatLngTuple;
 export type Waypoints = Waypoint[];

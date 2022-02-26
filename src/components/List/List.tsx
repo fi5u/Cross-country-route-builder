@@ -8,12 +8,15 @@ import ListItem from "components/ListItem";
  * @param param.
  */
 function List({ waypoints }: Props) {
+  console.log(waypoints);
+
   return (
     <ErrorBoundary id="List">
       <div className={styles.root}>
-        {waypoints.map((waypoint) => (
-          <ListItem key={waypoint} name={waypoint} />
-        ))}
+        {waypoints.map((waypoint) => {
+          const latLngString = `${waypoint[0]},${waypoint[1]}`;
+          return <ListItem key={latLngString} name={latLngString} />;
+        })}
       </div>
     </ErrorBoundary>
   );

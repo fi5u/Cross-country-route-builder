@@ -10,8 +10,9 @@ import config from "config";
  *
  * @param param.
  */
-function Map({ onMapClick }: Props) {
+function Map({ markers, onMapClick, polyline }: Props) {
   const map = useRef<L.Map>();
+  const markerGroup = useRef<L.LayerGroup | null>(L.layerGroup(markers));
 
   useEffect(() => {
     map.current = L.map("map").setView([51.505, -0.09], 13);
@@ -19,18 +20,36 @@ function Map({ onMapClick }: Props) {
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
       {
+        accessToken: config.externalKeys.mapbox,
         attribution:
           'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 10,
         id: "mapbox/streets-v11",
+        maxZoom: 10,
         tileSize: 512,
         zoomOffset: -1,
-        accessToken: config.externalKeys.mapbox,
       }
     ).addTo(map.current);
 
     map.current.on("click", onMapClick);
   }, []);
+
+  // When `markers` change, first remove current markers and update the list
+  useEffect(() => {
+    markerGroup.current?.removeLayer(markerGroup.current);
+
+    markerGroup.current = map.current
+      ? L.layerGroup(markers).addTo(map.current)
+      : null;
+  }, [markers]);
+
+  // When `polyline` changes, update the polyline
+  useEffect(() => {
+    if (!map.current || !polyline) {
+      return;
+    }
+
+    polyline.addTo(map.current);
+  }, [polyline]);
 
   return (
     <ErrorBoundary id="Map">

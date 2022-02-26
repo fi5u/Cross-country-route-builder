@@ -1,11 +1,11 @@
 import "./App.css";
-import type { AppStateAction } from "types";
+import type { AppStateAction, Waypoints } from "types";
 import ListView from "components/ListView";
 import MapView from "components/MapView";
 import { useReducer } from "react";
 
 interface AppState {
-  waypoints: string[];
+  waypoints: Waypoints;
 }
 
 const initialState = { waypoints: [] };
@@ -13,11 +13,11 @@ const initialState = { waypoints: [] };
 function reducer(state: AppState, action: AppStateAction) {
   switch (action.type) {
     case "addWaypoint":
-      return { waypoints: state.waypoints.concat(action.payload) };
+      return { waypoints: state.waypoints.concat([action.payload]) };
     case "removeWaypoint":
       return {
         waypoints: state.waypoints.filter(
-          (wp: string) => wp !== action.payload
+          (wp) => wp[0] !== action.payload[0] || wp[1] !== action.payload[1]
         ),
       };
     default:
@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <ListView waypoints={state.waypoints} />
-      <MapView dispatch={dispatch} />
+      <MapView dispatch={dispatch} waypoints={state.waypoints} />
     </div>
   );
 }
