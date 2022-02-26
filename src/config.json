@@ -1,3 +1,6 @@
 {
-  "appName": "Route Builder"
+  "appName": "Route Builder",
+  "externalKeys": {
+    "mapbox": "pk.eyJ1IjoidGJmaXNoZXIiLCJhIjoiY2wwM2wzajV5MDRpYTNycGcwaXRtZjA3ZSJ9.QYrZhnHAMFSQYnRMeF9pYQ"
+  }
 }
