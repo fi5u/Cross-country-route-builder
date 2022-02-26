@@ -18,7 +18,8 @@
     "jsx": "react-jsx",
     "paths": {
       "components": ["components"],
-      "config": ["config.json"]
+      "config": ["config.json"],
+      "types": ["types"]
     }
   },
   "include": ["src"]

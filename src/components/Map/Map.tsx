@@ -1,16 +1,16 @@
 import "leaflet/dist/leaflet.css";
+import { memo, useEffect, useRef } from "react";
 import ErrorBoundary from "components/utils/ErrorBoundary";
 import L from "leaflet";
 import type { Props } from "./Map.types";
 import styles from "./Map.module.css";
-import { useEffect, useRef } from "react";
 import config from "config";
 
 /**
  *
  * @param param.
  */
-function Map({}: Props) {
+function Map({ onMapClick }: Props) {
   const map = useRef<L.Map>();
 
   useEffect(() => {
@@ -32,10 +32,6 @@ function Map({}: Props) {
     map.current.on("click", onMapClick);
   }, []);
 
-  function onMapClick(event: L.LeafletEvent & { latlng: L.LatLng }) {
-    console.log(event.latlng);
-  }
-
   return (
     <ErrorBoundary id="Map">
       <div className={styles.root} id="map"></div>
@@ -43,4 +39,4 @@ function Map({}: Props) {
   );
 }
 
-export default Map;
+export default memo(Map);

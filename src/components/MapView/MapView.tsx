@@ -7,11 +7,19 @@ import Map from "components/Map";
  *
  * @param param.
  */
-function MapView({}: Props) {
+function MapView({ dispatch }: Props) {
+  function handleMapClick(event: L.LeafletEvent & { latlng: L.LatLng }) {
+    // console.log(`${event.latlng.lat},${event.latlng.lng}`);
+    dispatch({
+      type: "addWaypoint",
+      payload: `${event.latlng.lat},${event.latlng.lng}`,
+    });
+  }
+
   return (
     <ErrorBoundary id="MapView">
       <div className={styles.root}>
-        <Map />
+        <Map onMapClick={handleMapClick} />
       </div>
     </ErrorBoundary>
   );
