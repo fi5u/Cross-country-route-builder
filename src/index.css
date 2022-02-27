@@ -12,7 +12,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.waypoint-marker {
+  align-items: center;
+  background-color: var(--background);
+  border-radius: 50%;
+  color: var(--text);
+  display: flex !important; /* Override Leaflet styles */
+  font-weight: bold;
+  justify-content: center;
 }
