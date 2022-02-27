@@ -20,6 +20,29 @@ function reducer(state: AppState, action: AppStateAction) {
           (wp) => wp[0] !== action.payload[0] || wp[1] !== action.payload[1]
         ),
       };
+    case "REORDER_WAYPOINTS":
+      return {
+        waypoints:
+          action.payload.origIndex < action.payload.targetIndex
+            ? [
+                ...state.waypoints.slice(0, action.payload.origIndex),
+                ...state.waypoints.slice(
+                  action.payload.origIndex + 1,
+                  action.payload.targetIndex + 1
+                ),
+                ...[state.waypoints[action.payload.origIndex]],
+                ...state.waypoints.slice(action.payload.targetIndex + 1),
+              ]
+            : [
+                ...state.waypoints.slice(0, action.payload.targetIndex),
+                ...state.waypoints.slice(
+                  action.payload.targetIndex + 1,
+                  action.payload.origIndex + 1
+                ),
+                ...[state.waypoints[action.payload.targetIndex]],
+                ...state.waypoints.slice(action.payload.origIndex + 1),
+              ],
+      };
     case "UPDATE_WAYPOINT":
       return {
         waypoints: state.waypoints.map((waypoint, index) =>

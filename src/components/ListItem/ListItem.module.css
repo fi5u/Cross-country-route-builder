@@ -7,10 +7,25 @@
   padding: 8px 0;
 }
 
-.deleteButton {
+.root--isDragging {
+  transition: 0.01s;
+  transform: translateX(
+    -9999px
+  ); /* hide the original off-screen whilst dragging */
+}
+
+.iconButton {
   background-color: transparent;
   border: none;
   cursor: pointer;
   display: flex;
   padding: none;
+}
+
+.nameGroup {
+  display: flex;
+}
+
+.reorderButton {
+  margin-right: 8px;
 }
