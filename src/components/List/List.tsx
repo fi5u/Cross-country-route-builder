@@ -5,15 +5,34 @@ import styles from "./List.module.css";
 
 /**
  * Contains list of waypoint items
+ * @param param.dispatch Reducer dispatch function to update state
  * @param param.waypoints List of waypoint data
  */
-function List({ waypoints }: Props) {
+function List({ dispatch, waypoints }: Props) {
+  /**
+   * Delete a waypoint from the list
+   * @param latLng Comma-separated lat-long string
+   */
+  function handleDeleteWaypoint(latLng: string) {
+    dispatch({
+      type: "DELETE_WAYPOINT",
+      payload: latLng.split(",").map((str) => parseFloat(str)),
+    });
+  }
+
   return (
     <ErrorBoundary id="List">
       <div className={styles.root}>
-        {waypoints.map((waypoint) => {
+        {waypoints.map((waypoint, index) => {
           const latLngString = `${waypoint[0]},${waypoint[1]}`;
-          return <ListItem key={latLngString} name={latLngString} />;
+          return (
+            <ListItem
+              deleteWaypoint={handleDeleteWaypoint}
+              index={index}
+              key={latLngString}
+              latLng={latLngString}
+            />
+          );
         })}
       </div>
     </ErrorBoundary>

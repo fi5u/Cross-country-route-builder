@@ -1,3 +1,16 @@
 .root {
-  
+  align-items: center;
+  color: var(--text);
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.deleteButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  padding: none;
 }

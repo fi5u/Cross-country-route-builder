@@ -1,3 +1,5 @@
 export interface Props {
-  name: string;
+  deleteWaypoint: (latLng: string) => void;
+  index: number;
+  latLng: string;
 }

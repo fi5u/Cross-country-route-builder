@@ -2,3 +2,8 @@
   background-color: var(--background);
   padding: 32px 16px;
 }
+
+.info {
+  color: var(--text);
+  padding-top: 42px;
+}

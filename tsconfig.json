@@ -19,6 +19,7 @@
     "paths": {
       "components": ["components"],
       "config": ["config.json"],
+      "static": ["static"],
       "types": ["types"]
     }
   },

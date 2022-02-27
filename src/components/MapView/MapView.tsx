@@ -60,7 +60,7 @@ function MapView({ dispatch, waypoints }: Props) {
    */
   function handleMapClick(event: L.LeafletEvent & { latlng: L.LatLng }) {
     dispatch({
-      type: "addWaypoint",
+      type: "CREATE_WAYPOINT",
       payload: [event.latlng.lat, event.latlng.lng],
     });
   }
@@ -70,7 +70,7 @@ function MapView({ dispatch, waypoints }: Props) {
    * @param index Index of the clicked marker
    */
   function handleMarkerClick(index: number) {
-    dispatch({ type: "removeWaypoint", payload: waypoints[index] });
+    dispatch({ type: "DELETE_WAYPOINT", payload: waypoints[index] });
   }
 
   /**
@@ -81,7 +81,7 @@ function MapView({ dispatch, waypoints }: Props) {
   function handleUpdateWaypoint(event: L.DragEndEvent, index: number) {
     const newLatLng = event.target.getLatLng();
     dispatch({
-      type: "updateWaypoint",
+      type: "UPDATE_WAYPOINT",
       payload: {
         index,
         waypoint: [newLatLng.lat, newLatLng.lng],
