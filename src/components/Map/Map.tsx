@@ -57,7 +57,7 @@ function Map({ markers, onMapClick, polyline }: Props) {
 
   return (
     <ErrorBoundary id="Map">
-      <div className={styles.root} id="map"></div>
+      <div className={styles.root} id="map" data-testid="map"></div>
     </ErrorBoundary>
   );
 }
