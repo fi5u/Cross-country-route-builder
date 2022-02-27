@@ -1,7 +1,47 @@
 :root {
+  --accent: rgb(57, 57, 57);
   --background: rgb(42, 42, 42);
+  --primary: rgb(182, 226, 65);
   --text: rgb(207, 207, 207);
 }
+
+/* RESET */
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+/* END RESET */
 
 body {
   margin: 0;

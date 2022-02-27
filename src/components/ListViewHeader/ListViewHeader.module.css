@@ -1,3 +1,5 @@
 .root {
+  border-bottom: 3px solid var(--accent);
   color: var(--text);
+  padding-bottom: 8px;
 }

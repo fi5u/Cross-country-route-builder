@@ -1,11 +1,11 @@
 import ErrorBoundary from "components/utils/ErrorBoundary";
+import ListItem from "components/ListItem";
 import type { Props } from "./List.types";
 import styles from "./List.module.css";
-import ListItem from "components/ListItem";
 
 /**
- *
- * @param param.
+ * Contains list of waypoint items
+ * @param param.waypoints List of waypoint data
  */
 function List({ waypoints }: Props) {
   return (

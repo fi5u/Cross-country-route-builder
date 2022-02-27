@@ -5,8 +5,9 @@ import ListViewHeader from "components/ListViewHeader";
 import List from "components/List";
 
 /**
- *
- * @param param.
+ * List view contains the component that make up the display of the
+ * list of waypoints
+ * @param param.waypoints List of waypoint data
  */
 function ListView({ waypoints }: Props) {
   return (
