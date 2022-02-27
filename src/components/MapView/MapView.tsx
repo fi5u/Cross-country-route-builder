@@ -12,6 +12,8 @@ import styles from "./MapView.module.css";
  * @param param.waypoints List of waypoint data
  */
 function MapView({ dispatch, waypoints }: Props) {
+  const latestWaypoint = useRef<string>("");
+
   const polyline = useRef<L.Polyline>(L.polyline([]));
   const [markers, setMarkers] = useState<L.Marker[]>([]);
 
@@ -59,6 +61,16 @@ function MapView({ dispatch, waypoints }: Props) {
    * @param event Click event on the map
    */
   function handleMapClick(event: L.LeafletEvent & { latlng: L.LatLng }) {
+    const latLngStr = `${event.latlng.lat},${event.latlng.lng}`;
+
+    // NOTE: Safari sends two events in succession, prevent it here
+    // see: https://github.com/Leaflet/Leaflet/issues/7255
+    if (latestWaypoint.current === latLngStr) {
+      return;
+    }
+
+    latestWaypoint.current = `${event.latlng.lat},${event.latlng.lng}`;
+
     dispatch({
       type: "CREATE_WAYPOINT",
       payload: [event.latlng.lat, event.latlng.lng],
