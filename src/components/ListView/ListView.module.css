@@ -1,6 +1,14 @@
 .root {
   background-color: var(--background);
+  display: flex;
+  flex-direction: column;
   padding: 32px 16px;
+}
+
+.footer {
+  align-items: flex-end;
+  display: flex;
+  flex: 1;
 }
 
 .info {

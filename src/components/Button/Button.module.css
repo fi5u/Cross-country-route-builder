@@ -1,0 +1,19 @@
+.root {
+  align-items: center;
+  background-color: var(--primary);
+  border: none;
+  border-radius: 5px;
+  color: var(--background);
+  cursor: pointer;
+  display: flex;
+  font-size: 1.2rem;
+  font-weight: bold;
+  height: 42px;
+  justify-content: center;
+  width: 100%;
+}
+
+.root--isDisabled {
+  background-color: var(--disabled);
+  cursor: auto;
+}

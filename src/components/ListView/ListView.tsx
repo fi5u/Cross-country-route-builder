@@ -1,6 +1,7 @@
 import ErrorBoundary from "components/utils/ErrorBoundary";
 import type { Props } from "./ListView.types";
 import styles from "./ListView.module.css";
+import Button from "components/Button";
 import ListViewHeader from "components/ListViewHeader";
 import List from "components/List";
 
@@ -11,6 +12,25 @@ import List from "components/List";
  * @param param.waypoints List of waypoint data
  */
 function ListView({ dispatch, waypoints }: Props) {
+  async function downloadGpx() {
+    const { default: createGpx } = await import("gps-to-gpx");
+
+    const gpx = createGpx(
+      waypoints.map((wp) => ({ latitude: wp[0], longitude: wp[1] }))
+    );
+
+    const element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/plain;charset=utf-8," + encodeURIComponent(gpx)
+    );
+    element.setAttribute("download", "route.gpx");
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
+
   return (
     <ErrorBoundary id="ListView">
       <section className={styles.root}>
@@ -23,6 +43,16 @@ function ListView({ dispatch, waypoints }: Props) {
             Click on the map to build your list of waypoints.
           </p>
         )}
+
+        <div className={styles.footer}>
+          <Button
+            className={styles.button}
+            disabled={!waypoints.length}
+            onClick={downloadGpx}
+          >
+            Download your Route
+          </Button>
+        </div>
       </section>
     </ErrorBoundary>
   );
