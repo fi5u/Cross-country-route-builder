@@ -36,10 +36,9 @@ function MapView({ dispatch, waypoints }: Props) {
   function calulateMarkers() {
     setMarkers(
       waypoints.map((waypoint, index) =>
-        L.marker(waypoint, { draggable: true, icon: ICON }).on(
-          "dragend",
-          (event) => handleUpdateWaypoint(event, index)
-        )
+        L.marker(waypoint, { draggable: true, icon: ICON })
+          .on("dragend", (event) => handleUpdateWaypoint(event, index))
+          .on("click", (event) => handleMarkerClick(event, index))
       )
     );
   }
@@ -59,7 +58,9 @@ function MapView({ dispatch, waypoints }: Props) {
     });
   }
 
-  function handleMarkerClick() {}
+  function handleMarkerClick(event: L.LeafletEvent, index: number) {
+    dispatch({ type: "removeWaypoint", payload: waypoints[index] });
+  }
 
   function handleUpdateWaypoint(event: L.DragEndEvent, index: number) {
     const newLatLng = event.target.getLatLng();
