@@ -13,6 +13,7 @@ import styles from "./MapView.module.css";
  */
 function MapView({ dispatch, waypoints }: Props) {
   const latestWaypoint = useRef<string>("");
+  const blockAdd = useRef<boolean>(false);
 
   const polyline = useRef<L.Polyline>(L.polyline([]));
   const [markers, setMarkers] = useState<L.Marker[]>([]);
@@ -65,7 +66,7 @@ function MapView({ dispatch, waypoints }: Props) {
 
     // NOTE: Safari sends two events in succession, prevent it here
     // see: https://github.com/Leaflet/Leaflet/issues/7255
-    if (latestWaypoint.current === latLngStr) {
+    if (latestWaypoint.current === latLngStr || blockAdd.current) {
       return;
     }
 
@@ -82,6 +83,14 @@ function MapView({ dispatch, waypoints }: Props) {
    * @param index Index of the clicked marker
    */
   function handleMarkerClick(index: number) {
+    // NOTE: Safari sends two events in succession, i.e. removes the waypoint,
+    // then adds it back
+    // see: https://github.com/Leaflet/Leaflet/issues/7255
+    blockAdd.current = true;
+    window.setTimeout(() => {
+      blockAdd.current = false;
+    }, 500);
+
     dispatch({ type: "DELETE_WAYPOINT", payload: waypoints[index] });
   }
 
